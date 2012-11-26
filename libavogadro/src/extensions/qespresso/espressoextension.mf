@@ -1,0 +1,6 @@
+Name: espressoextension
+Author: Mauro Iazzi
+Package: espressoextension
+Version: 1
+Files: espressoextension.so
+Category: contrib

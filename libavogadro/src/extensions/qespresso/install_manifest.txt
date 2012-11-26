@@ -1,0 +1,1 @@
+/home/iazzi/local/lib/avogadro/1_1/contrib/espressoextension.so
