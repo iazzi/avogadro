@@ -240,4 +240,3 @@ namespace Espresso {
       text->show();
   }
 }
-#include "espressopwscfdialog.moc"

@@ -19,7 +19,7 @@ set( espressoextension_SRCS
         espressopwscfdialog.cpp
 )
 
-avogadro_plugin( espressoextension
+avogadro_plugin_nogl( espressoextension
                  "${espressoextension_SRCS}")
 
 TARGET_LINK_LIBRARIES(espressoextension ${QT_LIBRARIES})

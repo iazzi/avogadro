@@ -102,6 +102,4 @@ namespace Espresso {
   }
 }
 
-#include "espressoextension.moc"
-
 Q_EXPORT_PLUGIN2(espressoextension, Espresso::EspressoExtensionFactory)

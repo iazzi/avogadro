@@ -404,4 +404,3 @@ void EspressoPWscfConfig::setSpecies (QStringList snames) {
     }
 }
 
-#include "espressopwscfconfig.moc"
