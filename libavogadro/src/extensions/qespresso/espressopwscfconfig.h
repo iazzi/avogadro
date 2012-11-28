@@ -59,6 +59,7 @@ public:
 signals:
     
 public slots:
+    void setPDir (QString path);
 };
 
 #endif // ESPRESSOPWSCFCONFIG_H

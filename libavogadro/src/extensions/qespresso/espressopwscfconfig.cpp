@@ -417,3 +417,16 @@ void EspressoPWscfConfig::setSpecies (QStringList snames) {
     }
 }
 
+void EspressoPWscfConfig::setPDir (QString path) {
+    if (path.isEmpty()) path = "/home/iazzi/projects/espresso-5.0/upf_files";
+    QDir dir(path);
+    for (int i=0;i<m_species.count();i++) {
+        QString sym = m_species[i];
+        if (m_speciesWidget->findChild<QComboBox*>(sym)) continue;
+        QComboBox *editor = new QComboBox;
+        editor->setEditable(false);
+        editor->addItems(dir.entryList(QStringList(sym+".*")));
+        editor->setObjectName(sym);
+        m_speciesLayout->addRow(sym, editor);
+    }
+}
