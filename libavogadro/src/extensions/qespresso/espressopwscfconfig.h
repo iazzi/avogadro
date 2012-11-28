@@ -31,6 +31,8 @@ class EspressoPWscfConfig : public QObject {
 
     QFormLayout *m_speciesLayout;
 
+    QStringList m_species;
+
     QComboBox *boolCombo ();
 public:
     explicit EspressoPWscfConfig (QObject *parent = 0);

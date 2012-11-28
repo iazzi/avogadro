@@ -89,8 +89,12 @@ void EspressoPWscfConfig::setupSystem () {
     editor = new QDoubleSpinBox; editor->setObjectName("ecutwfc"); layout->addRow("ecutwfc", editor);
     editor = new QDoubleSpinBox; editor->setObjectName("ecutrho"); layout->addRow("ecutrho", editor);
     editor = new QDoubleSpinBox; editor->setObjectName("ecutfock"); layout->addRow("ecutfock", editor);
-    editor = new QSpinBox; editor->setObjectName("nr1,nr2,nr3"); layout->addRow("nr1,nr2,nr3", editor);
-    editor = new QSpinBox; editor->setObjectName("nr1s,nr2s,nr3s"); layout->addRow("nr1s,nr2s,nr3s", editor);
+    editor = new QSpinBox; editor->setObjectName("nr1"); layout->addRow("nr1", editor);
+    editor = new QSpinBox; editor->setObjectName("nr2"); layout->addRow("nr2", editor);
+    editor = new QSpinBox; editor->setObjectName("nr3"); layout->addRow("nr3", editor);
+    editor = new QSpinBox; editor->setObjectName("nr1s"); layout->addRow("nr1s", editor);
+    editor = new QSpinBox; editor->setObjectName("nr2s"); layout->addRow("nr2s", editor);
+    editor = new QSpinBox; editor->setObjectName("nr3s"); layout->addRow("nr3s", editor);
     editor = boolCombo(); editor->setObjectName("nosym"); layout->addRow("nosym", editor);
     editor = boolCombo(); editor->setObjectName("nosym_evc"); layout->addRow("nosym_evc", editor);
     editor = boolCombo(); editor->setObjectName("noinv"); layout->addRow("noinv", editor);
@@ -125,7 +129,9 @@ void EspressoPWscfConfig::setupSystem () {
     editor = new QDoubleSpinBox; editor->setObjectName("angle1(i),i=1,ntyp"); layout->addRow("angle1(i),i=1,ntyp", editor);
     editor = new QDoubleSpinBox; editor->setObjectName("angle2(i),i=1,ntyp"); layout->addRow("angle2(i),i=1,ntyp", editor);
     editor = new QLineEdit; editor->setObjectName("constrained_magnetization"); layout->addRow("constrained_magnetization", editor);
-    editor = new QDoubleSpinBox; editor->setObjectName("fixed_magnetization(i),i=1,3"); layout->addRow("fixed_magnetization(i),i=1,3", editor);
+    editor = new QDoubleSpinBox; editor->setObjectName("fixed_magnetization(1)"); layout->addRow("fixed_magnetization(1)", editor);
+    editor = new QDoubleSpinBox; editor->setObjectName("fixed_magnetization(2)"); layout->addRow("fixed_magnetization(2)", editor);
+    editor = new QDoubleSpinBox; editor->setObjectName("fixed_magnetization(3)"); layout->addRow("fixed_magnetization(3)", editor);
     editor = new QDoubleSpinBox; editor->setObjectName("lambda"); layout->addRow("lambda", editor);
     editor = new QSpinBox; editor->setObjectName("report"); layout->addRow("report", editor);
     editor = boolCombo(); editor->setObjectName("lspinorb"); layout->addRow("lspinorb", editor);
@@ -246,8 +252,12 @@ QString EspressoPWscfConfig::systemSection () {
     entry = form->findChild<QDoubleSpinBox*>("ecutwfc")->cleanText(); if (!entry.isEmpty() && entry!="\"\"") list << ("  ecutwfc = " + entry);
     entry = form->findChild<QDoubleSpinBox*>("ecutrho")->cleanText(); if (!entry.isEmpty() && entry!="\"\"") list << ("  ecutrho = " + entry);
     entry = form->findChild<QDoubleSpinBox*>("ecutfock")->cleanText(); if (!entry.isEmpty() && entry!="\"\"") list << ("  ecutfock = " + entry);
-    entry = form->findChild<QSpinBox*>("nr1,nr2,nr3")->cleanText(); if (!entry.isEmpty() && entry!="\"\"") list << ("  nr1,nr2,nr3 = " + entry);
-    entry = form->findChild<QSpinBox*>("nr1s,nr2s,nr3s")->cleanText(); if (!entry.isEmpty() && entry!="\"\"") list << ("  nr1s,nr2s,nr3s = " + entry);
+    entry = form->findChild<QSpinBox*>("nr1")->cleanText(); if (!entry.isEmpty() && entry!="\"\"") list << ("  nr1 = " + entry);
+    entry = form->findChild<QSpinBox*>("nr2")->cleanText(); if (!entry.isEmpty() && entry!="\"\"") list << ("  nr2 = " + entry);
+    entry = form->findChild<QSpinBox*>("nr3")->cleanText(); if (!entry.isEmpty() && entry!="\"\"") list << ("  nr3 = " + entry);
+    entry = form->findChild<QSpinBox*>("nr1s")->cleanText(); if (!entry.isEmpty() && entry!="\"\"") list << ("  nr1s = " + entry);
+    entry = form->findChild<QSpinBox*>("nr2s")->cleanText(); if (!entry.isEmpty() && entry!="\"\"") list << ("  nr2s = " + entry);
+    entry = form->findChild<QSpinBox*>("nr3s")->cleanText(); if (!entry.isEmpty() && entry!="\"\"") list << ("  nr3s = " + entry);
     entry = form->findChild<QComboBox*>("nosym")->currentText(); if (!entry.isEmpty() && entry!="\"\"") list << ("  nosym = " + entry);
     entry = form->findChild<QComboBox*>("nosym_evc")->currentText(); if (!entry.isEmpty() && entry!="\"\"") list << ("  nosym_evc = " + entry);
     entry = form->findChild<QComboBox*>("noinv")->currentText(); if (!entry.isEmpty() && entry!="\"\"") list << ("  noinv = " + entry);
@@ -282,7 +292,9 @@ QString EspressoPWscfConfig::systemSection () {
     entry = form->findChild<QDoubleSpinBox*>("angle1(i),i=1,ntyp")->cleanText(); if (!entry.isEmpty() && entry!="\"\"") list << ("  angle1(i),i=1,ntyp = " + entry);
     entry = form->findChild<QDoubleSpinBox*>("angle2(i),i=1,ntyp")->cleanText(); if (!entry.isEmpty() && entry!="\"\"") list << ("  angle2(i),i=1,ntyp = " + entry);
     entry = form->findChild<QLineEdit*>("constrained_magnetization")->text().prepend('"').append('"'); if (!entry.isEmpty() && entry!="\"\"") list << ("  constrained_magnetization = " + entry);
-    entry = form->findChild<QDoubleSpinBox*>("fixed_magnetization(i),i=1,3")->cleanText(); if (!entry.isEmpty() && entry!="\"\"") list << ("  fixed_magnetization(i),i=1,3 = " + entry);
+    entry = form->findChild<QDoubleSpinBox*>("fixed_magnetization(1)")->cleanText(); if (!entry.isEmpty() && entry!="\"\"") list << ("  fixed_magnetization(1) = " + entry);
+    entry = form->findChild<QDoubleSpinBox*>("fixed_magnetization(2)")->cleanText(); if (!entry.isEmpty() && entry!="\"\"") list << ("  fixed_magnetization(2) = " + entry);
+    entry = form->findChild<QDoubleSpinBox*>("fixed_magnetization(3)")->cleanText(); if (!entry.isEmpty() && entry!="\"\"") list << ("  fixed_magnetization(3) = " + entry);
     entry = form->findChild<QDoubleSpinBox*>("lambda")->cleanText(); if (!entry.isEmpty() && entry!="\"\"") list << ("  lambda = " + entry);
     entry = form->findChild<QSpinBox*>("report")->cleanText(); if (!entry.isEmpty() && entry!="\"\"") list << ("  report = " + entry);
     entry = form->findChild<QComboBox*>("lspinorb")->currentText(); if (!entry.isEmpty() && entry!="\"\"") list << ("  lspinorb = " + entry);
@@ -373,6 +385,7 @@ void EspressoPWscfConfig::setCell (int ibrav, double a, double b, double c, doub
 }
 
 void EspressoPWscfConfig::setSpecies (QStringList snames) {
+    m_species = snames;
     QDir dir("/home/iazzi/projects/espresso-5.0/upf_files");
 
 //    QLayoutItem *child;
