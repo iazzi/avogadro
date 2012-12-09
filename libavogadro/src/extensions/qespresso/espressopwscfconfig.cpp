@@ -72,14 +72,6 @@ void EspressoPWscfConfig::setupSystem () {
     sa->setFrameShape(QFrame::NoFrame);
     QFormLayout *layout = new QFormLayout;
     QWidget *editor = 0;
-    editor = new QSpinBox; editor->setObjectName("ibrav"); layout->addRow("ibrav", editor);
-//    editor = new QDoubleSpinBox; editor->setObjectName("celldm(i),i=1,6"); layout->addRow("celldm(i),i=1,6", editor);
-    editor = new QDoubleSpinBox; editor->setObjectName("A"); layout->addRow("A", editor);
-    editor = new QDoubleSpinBox; editor->setObjectName("B"); layout->addRow("B", editor);
-    editor = new QDoubleSpinBox; editor->setObjectName("C"); layout->addRow("C", editor);
-    editor = new QDoubleSpinBox; editor->setObjectName("cosAB"); layout->addRow("cosAB", editor);
-    editor = new QDoubleSpinBox; editor->setObjectName("cosAC"); layout->addRow("cosAC", editor);
-    editor = new QDoubleSpinBox; editor->setObjectName("cosBC"); layout->addRow("cosBC", editor);
     editor = new QSpinBox; editor->setObjectName("nat"); layout->addRow("nat", editor);
     editor = new QSpinBox; editor->setObjectName("ntyp"); layout->addRow("ntyp", editor);
     editor = new QSpinBox; editor->setObjectName("nbnd"); layout->addRow("nbnd", editor);
@@ -235,14 +227,7 @@ QString EspressoPWscfConfig::systemSection () {
     QStringList list;
     QString entry;
 
-    entry = form->findChild<QSpinBox*>("ibrav")->cleanText(); if (!entry.isEmpty() && entry!="\"\"") list << ("  ibrav = " + entry);
-//    entry = form->findChild<QDoubleSpinBox*>("celldm(i),i=1,6")->cleanText(); if (!entry.isEmpty() && entry!="\"\"") list << ("  celldm(i),i=1,6 = " + entry);
-    entry = form->findChild<QDoubleSpinBox*>("A")->cleanText(); if (!entry.isEmpty() && entry!="\"\"") list << ("  A = " + entry);
-    entry = form->findChild<QDoubleSpinBox*>("B")->cleanText(); if (!entry.isEmpty() && entry!="\"\"") list << ("  B = " + entry);
-    entry = form->findChild<QDoubleSpinBox*>("C")->cleanText(); if (!entry.isEmpty() && entry!="\"\"") list << ("  C = " + entry);
-    entry = form->findChild<QDoubleSpinBox*>("cosAB")->cleanText(); if (!entry.isEmpty() && entry!="\"\"") list << ("  cosAB = " + entry);
-    entry = form->findChild<QDoubleSpinBox*>("cosAC")->cleanText(); if (!entry.isEmpty() && entry!="\"\"") list << ("  cosAC = " + entry);
-    entry = form->findChild<QDoubleSpinBox*>("cosBC")->cleanText(); if (!entry.isEmpty() && entry!="\"\"") list << ("  cosBC = " + entry);
+    list << ("  ibrav = 0; a = 1;");
     entry = form->findChild<QSpinBox*>("nat")->cleanText(); if (!entry.isEmpty() && entry!="\"\"") list << ("  nat = " + entry);
     entry = form->findChild<QSpinBox*>("ntyp")->cleanText(); if (!entry.isEmpty() && entry!="\"\"") list << ("  ntyp = " + entry);
     entry = form->findChild<QSpinBox*>("nbnd")->cleanText(); if (!entry.isEmpty() && entry!="\"\"") list << ("  nbnd = " + entry);
@@ -372,16 +357,6 @@ QMap<QString, QString> EspressoPWscfConfig::pseudopotentials () {
         ret.insert(l.at(i)->objectName(), l.at(i)->currentText());
     }
     return ret;
-}
-
-void EspressoPWscfConfig::setCell (int ibrav, double a, double b, double c, double cosAB, double cosBC, double cosAC) {
-    m_systemWidget->findChild<QSpinBox*>("ibrav")->setValue(ibrav);
-    m_systemWidget->findChild<QDoubleSpinBox*>("A")->setValue(a);
-    m_systemWidget->findChild<QDoubleSpinBox*>("B")->setValue(b);
-    m_systemWidget->findChild<QDoubleSpinBox*>("C")->setValue(c);
-    m_systemWidget->findChild<QDoubleSpinBox*>("cosAB")->setValue(cosAB);
-    m_systemWidget->findChild<QDoubleSpinBox*>("cosBC")->setValue(cosBC);
-    m_systemWidget->findChild<QDoubleSpinBox*>("cosAC")->setValue(cosAC);
 }
 
 void EspressoPWscfConfig::setSpecies (QStringList snames) {

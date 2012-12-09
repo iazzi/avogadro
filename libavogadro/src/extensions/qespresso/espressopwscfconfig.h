@@ -54,7 +54,6 @@ public:
     QWidget *speciesWidget () { return m_speciesWidget; }
     QWidget *kPointsWidget () { return m_kPointsWidget; }
 
-    void setCell (int ibrav, double a, double b, double c, double cosAB, double cosBC, double cosAC);
     void setSpecies (QStringList snames);
 signals:
     

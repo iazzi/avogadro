@@ -133,55 +133,12 @@ namespace Espresso {
               species.append(a.atomicNumber());
           }
       }
-      ibrav = 0;
-      a = b = c = 5;
-      cosAB = cosBC = cosAC = 0.0;
-      if (mol_->OBUnitCell()) {
-          a = mol_->OBUnitCell()->GetA();
-          b = mol_->OBUnitCell()->GetB();
-          c = mol_->OBUnitCell()->GetC();
-          cosBC = cos(mol_->OBUnitCell()->GetAlpha()*pi/180.0);
-          cosAC = cos(mol_->OBUnitCell()->GetBeta()*pi/180.0);
-          cosAB = cos(mol_->OBUnitCell()->GetGamma()*pi/180.0);
-          switch (mol_->OBUnitCell()->GetLatticeType()) {
-          case OpenBabel::OBUnitCell::Undefined:
-            break;
-          case OpenBabel::OBUnitCell::Cubic:
-              ibrav = 1;
-              break;
-          case OpenBabel::OBUnitCell::Hexagonal:
-              ibrav = 14;
-              break;
-          case OpenBabel::OBUnitCell::Rhombohedral:
-              ibrav = 14;
-              break;
-          case OpenBabel::OBUnitCell::Tetragonal:
-              ibrav = 14;
-              break;
-          case OpenBabel::OBUnitCell::Orthorhombic:
-              ibrav = 14;
-              break;
-          case OpenBabel::OBUnitCell::Monoclinic:
-              if (mol_->OBUnitCell()->GetGamma()!=90) {
-                  ibrav = 12;
-              } else if (mol_->OBUnitCell()->GetBeta()!=90) {
-                  ibrav = -12;
-              } else {
-                  ibrav = 14;
-              }
-              break;
-          case OpenBabel::OBUnitCell::Triclinic:
-              ibrav = 14;
-              break;
-          }
-      }
   }
 
   void EspressoPWscfDialog::run (Molecule *mol) {
       mol_ = mol;
       if (mol==NULL) return;
       readMolecule();
-      m_config->setCell(ibrav, a, b, c, cosAB, cosBC, cosAC);
       QStringList snames;
       for (int i=0;i<species.size();i++) {
           snames.append(m_symbols[species[i]]);
@@ -195,9 +152,6 @@ namespace Espresso {
       input.append(m_config->controlSection());
       input.append(m_config->systemSection());
       input.append(m_config->electronsSection());
-//      input.append(atomic_species);
-//      input.append(atomic_positions);
-//      qDebug() << ibrav << a << b << c << cosBC << cosAC << cosAB;
       QMap<QString,QString> mpp = m_config->pseudopotentials();
       QString atomic_species = "ATOMIC_SPECIES\n";
       for (int i=0;i<species.size();i++) {
@@ -232,6 +186,15 @@ namespace Espresso {
       input.append(atomic_species);
       input.append(atomic_positions);
       input.append("K_POINTS automatic\n 20 20 20 0 0 0\n\n");
+
+      input.append("CELL_PARAMETERS angstrom\n");
+      for (int i=0;i<3;i++) {
+          for (int j=0;j<3;j++) {
+              input.append(QByteArray::number(mol_->OBUnitCell()->GetCellMatrix().Get(i, j)));
+              input.append(" ");
+          }
+          input.append("\n");
+      }
 //      qDebug() << input;
 
       hide();
